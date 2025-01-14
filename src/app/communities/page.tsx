@@ -4,7 +4,12 @@ import Link from "next/link";
 
 const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string }[] }> => {
     try {
-        const response = await fetch("http://localhost:3000/api/getImageFileIds");
+
+        const apiUrl = process.env.NODE_ENV === 'production'
+            ? 'https://your-production-api-url.com/api/getImageFileIds'
+            : 'http://localhost:3000/api/getImageFileIds';
+
+        const response = await fetch(apiUrl);
         const data = await response.json();
         return data;
     } catch (error) {
