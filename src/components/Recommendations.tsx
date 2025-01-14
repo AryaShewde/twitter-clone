@@ -1,6 +1,5 @@
 import Link from "next/link";
 import NextImage from "next/image";
-import Image from "./Image";
 
 const Recommendations = () => {
   return (
