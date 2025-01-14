@@ -17,11 +17,11 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
 interface Params {
   params: {
     postId: string;
-  }
+  };
 }
 
 const StatusPage = async ({ params }: Params) => {
-  const { postId } = await params;
+  const { postId } = params;
   const data = await fetchFileIds();
   const mainidarray = data.fileData;
   const foundFileDetail = mainidarray.find((file) => file.fileId === postId);
