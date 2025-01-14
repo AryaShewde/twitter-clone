@@ -1,4 +1,4 @@
-"use client"
+"use client" // Ensure you're using the client-side version
 
 import Comments from "@/components/Comments";
 import Image from "@/components/Image";
@@ -23,15 +23,9 @@ const fetchFileIds = async (): Promise<{ fileData: FileDetail[] }> => {
   }
 };
 
-// Define the Params interface for the route parameter
-interface Params {
-  params: {
-    postId: string;
-  };
-}
-
-const StatusPage = ({ params }: Params) => {
-  const { postId } = params;
+// StatusPage component no longer needs to manually define 'Params'
+const StatusPage = ({ params }: { params: { postId: string } }) => {
+  const { postId } = params; // Destructure the 'postId' directly
   const [fileDetail, setFileDetail] = useState<FileDetail | null>(null); // Specify FileDetail or null type
 
   // Use effect to fetch data when component mounts
