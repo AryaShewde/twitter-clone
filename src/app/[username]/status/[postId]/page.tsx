@@ -23,7 +23,9 @@ const fetchFileIds = async (): Promise<{ fileData: FileDetail[] }> => {
   }
 };
 
-// Use Next.js's automatic params injection for dynamic routes
+// The component does **not need to type params manually**
+// Next.js will automatically inject the params into the component when using dynamic routes
+
 const StatusPage = ({ params }: { params: { postId: string } }) => {
   const { postId } = params;
   const [fileDetail, setFileDetail] = useState<FileDetail | null>(null);
