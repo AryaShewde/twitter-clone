@@ -18,9 +18,9 @@ export async function GET() {
       description: file.customMetadata?.description || "No description",
     }));
     return NextResponse.json({ fileData });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { error: 'Failed to fetch files', details: error.message },
+      { error: 'Failed to fetch files' },
       { status: 500 }
     );
   }
