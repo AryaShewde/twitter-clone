@@ -1,10 +1,9 @@
 "use client" // Ensure you're using the client-side version
-
+import { useEffect, useState } from "react";
 import Comments from "@/components/Comments";
 import Image from "@/components/Image";
 import SinglePost from "@/components/SinglePost";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 
 // Define a type for the file data
 interface FileDetail {
@@ -12,6 +11,7 @@ interface FileDetail {
   description: string;
 }
 
+// Fetch function to get file data
 const fetchFileIds = async (): Promise<{ fileData: FileDetail[] }> => {
   try {
     const response = await fetch("http://localhost:3000/api/getImageFileIds");
@@ -23,20 +23,20 @@ const fetchFileIds = async (): Promise<{ fileData: FileDetail[] }> => {
   }
 };
 
-// StatusPage component no longer needs to manually define 'Params'
+// Use Next.js's automatic params injection for dynamic routes
 const StatusPage = ({ params }: { params: { postId: string } }) => {
-  const { postId } = params; // Destructure the 'postId' directly
-  const [fileDetail, setFileDetail] = useState<FileDetail | null>(null); // Specify FileDetail or null type
+  const { postId } = params;
+  const [fileDetail, setFileDetail] = useState<FileDetail | null>(null);
 
-  // Use effect to fetch data when component mounts
+  // Fetch file details when the page loads or when postId changes
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchFileIds();
       const foundFileDetail = data.fileData.find((file) => file.fileId === postId);
-      setFileDetail(foundFileDetail || null); // Set `null` if no file detail is found
+      setFileDetail(foundFileDetail || null);
     };
     fetchData();
-  }, [postId]); // Run this effect when postId changes
+  }, [postId]);
 
   if (!fileDetail) {
     return <div>Loading...</div>; // Show loading state while data is fetched
