@@ -5,8 +5,13 @@ import SinglePost from "@/components/SinglePost";
 import Link from "next/link";
 import React from "react";
 
-// Fetch data function remains the same
-const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string }[] }> => {
+// Define a type for the file data
+interface FileDetail {
+  fileId: string;
+  description: string;
+}
+
+const fetchFileIds = async (): Promise<{ fileData: FileDetail[] }> => {
   try {
     const response = await fetch("http://localhost:3000/api/getImageFileIds");
     const data = await response.json();
@@ -17,7 +22,6 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
   }
 };
 
-// Remove async here, as `params` is already provided synchronously
 interface Params {
   params: {
     postId: string;
@@ -25,15 +29,15 @@ interface Params {
 }
 
 const StatusPage = ({ params }: Params) => {
-  const { postId } = params; // No need for `await`, `params` is already available
-  const [fileDetail, setFileDetail] = React.useState<any>(null);
+  const { postId } = params;
+  const [fileDetail, setFileDetail] = React.useState<FileDetail | null>(null); // Specify FileDetail or null type
 
   // Use effect to fetch data when component mounts
   React.useEffect(() => {
     const fetchData = async () => {
       const data = await fetchFileIds();
       const foundFileDetail = data.fileData.find((file) => file.fileId === postId);
-      setFileDetail(foundFileDetail);
+      setFileDetail(foundFileDetail || null); // Set `null` if no file detail is found
     };
     fetchData();
   }, [postId]);
@@ -43,7 +47,7 @@ const StatusPage = ({ params }: Params) => {
   }
 
   return (
-    <div className="">
+    <div>
       <div className="flex items-center gap-8 sticky top-0 backdrop-blur-md p-4 z-10 bg-[#00000084]">
         <Link href="/">
           <Image path="icons/back.svg" alt="back" w={24} h={24} />
