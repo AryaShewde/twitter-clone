@@ -15,8 +15,7 @@ interface FolderObject {
 }
 
 // ImageKit's response from the listFiles API
-interface ListFilesResponse {
-  fileList: (FileObject | FolderObject)[]; // Files and folders can both be in this list
+interface ListFilesResponse extends Array<FileObject | FolderObject> {
   $ResponseMetadata: ResponseMetadata; // Metadata for the response
 }
 
@@ -48,18 +47,18 @@ export async function GET() {
         return {
           fileId: item.fileId,
           customMetadata: {
-            description: item.customMetadata?.description || "No description",
+            description: typeof item.customMetadata?.description === 'string' ? item.customMetadata.description : "No description",
+          },
+        };
+      } else {
+        // Handle FolderObject (which doesn't have customMetadata)
+        return {
+          fileId: item.folderId, // Use folderId as fileId in this case
+          customMetadata: {
+            description: "No description", // Default to "No description"
           },
         };
       }
-
-      // Handle FolderObject (which doesn't have customMetadata)
-      return {
-        fileId: item.folderId, // Use folderId as fileId in this case
-        customMetadata: {
-          description: item.customMetadata?.description || "No description", // Default to "No description"
-        },
-      };
     });
 
     return NextResponse.json({ fileData: files });
