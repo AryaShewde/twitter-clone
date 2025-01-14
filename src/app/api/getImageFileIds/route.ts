@@ -4,20 +4,26 @@ import { imagekit } from '@/utils';
 interface ImageKitFile {
   fileId: string;
   customMetadata: {
-    description?: string; 
+    description?: string;
   };
 }
 
 export async function GET() {
   try {
-    const files: ImageKitFile[] = await imagekit.listFiles({
+    // Fetch the file list from ImageKit
+    const response = await imagekit.listFiles({
       path: "posts"
     });
-    const fileData = files.map((file) => ({
+
+    // Ensuring we handle both files and folders correctly and map only to ImageKitFile
+    const files: ImageKitFile[] = response.fileList.map((file) => ({
       fileId: file.fileId,
-      description: file.customMetadata?.description || "No description",
+      customMetadata: {
+        description: file.customMetadata?.description || "No description", // Default value if description is missing
+      },
     }));
-    return NextResponse.json({ fileData });
+
+    return NextResponse.json({ fileData: files });
   } catch (error: unknown) {
     return NextResponse.json(
       { error: 'Failed to fetch files' },
