@@ -1,9 +1,10 @@
 "use client"
+
 import Comments from "@/components/Comments";
 import Image from "@/components/Image";
 import SinglePost from "@/components/SinglePost";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // Define a type for the file data
 interface FileDetail {
@@ -22,6 +23,7 @@ const fetchFileIds = async (): Promise<{ fileData: FileDetail[] }> => {
   }
 };
 
+// Define the Params interface for the route parameter
 interface Params {
   params: {
     postId: string;
@@ -30,17 +32,17 @@ interface Params {
 
 const StatusPage = ({ params }: Params) => {
   const { postId } = params;
-  const [fileDetail, setFileDetail] = React.useState<FileDetail | null>(null); // Specify FileDetail or null type
+  const [fileDetail, setFileDetail] = useState<FileDetail | null>(null); // Specify FileDetail or null type
 
   // Use effect to fetch data when component mounts
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       const data = await fetchFileIds();
       const foundFileDetail = data.fileData.find((file) => file.fileId === postId);
       setFileDetail(foundFileDetail || null); // Set `null` if no file detail is found
     };
     fetchData();
-  }, [postId]);
+  }, [postId]); // Run this effect when postId changes
 
   if (!fileDetail) {
     return <div>Loading...</div>; // Show loading state while data is fetched
