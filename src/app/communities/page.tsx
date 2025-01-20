@@ -4,12 +4,7 @@ import Link from "next/link";
 
 const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string }[] }> => {
     try {
-
-        const apiUrl = process.env.NODE_ENV === 'production'
-            ? 'https://your-production-api-url.com/api/getImageFileIds'
-            : 'http://localhost:3000/api/getImageFileIds';
-
-        const response = await fetch(apiUrl);
+        const response = await fetch(`${process.env.FETCH_URL}/api/getImageFileIds`);
         const data = await response.json();
         return data;
     } catch (error) {
@@ -20,6 +15,9 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
 
 const Page = async () => {
     const data = await fetchFileIds();
+    if (!data.fileData || data.fileData.length === 0) {
+        return <div className="text-center p-4">Data not found</div>;
+    }
     return (
         <div className="p-4 pt-1 border-[1px] h-full border-borderGray flex flex-col gap-2 w-full">
             <div className="flex items-center p-2 justify-between sticky top-0 z-30 backdrop-blur-md bg-[#00000084]">

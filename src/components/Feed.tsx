@@ -2,7 +2,7 @@ import Post from "./Post"
 
 const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string }[] }> => {
   try {
-    const response = await fetch("http://localhost:3000/api/getImageFileIds");
+    const response = await fetch(`${process.env.FETCH_URL}/api/getImageFileIds`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -13,6 +13,9 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
 
 const Feed = async () => {
   const data = await fetchFileIds();
+  if (!data.fileData || data.fileData.length === 0) {
+    return <div className="text-center p-4">Data not found</div>;
+  }
   return (
     <div className=''>
       {data.fileData.slice().reverse().map((filesubdata) => (
