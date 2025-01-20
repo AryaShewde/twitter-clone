@@ -14,13 +14,13 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
   }
 };
 
-interface Params {
-  params: {
-    postId: string;
-  }
-}
+// interface Params {
+//   params: {
+//     postId: string;
+//   }
+// }
 
-const StatusPage = async ({ params }: Params) => {
+const StatusPage = async () => {
   // const { postId } = await params;
   // const data = await fetchFileIds();
   // const mainidarray = data.fileData;
