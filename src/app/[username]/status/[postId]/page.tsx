@@ -1,6 +1,6 @@
 import Comments from "@/components/Comments";
 import Image from "@/components/Image";
-import SinglePost from "@/components/SinglePost";
+// import SinglePost from "@/components/SinglePost";
 import Link from "next/link";
 
 const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string }[] }> => {
@@ -21,10 +21,10 @@ interface Params {
 }
 
 const StatusPage = async ({ params }: Params) => {
-  const { postId } = await params;
-  const data = await fetchFileIds();
-  const mainidarray = data.fileData;
-  const foundFileDetail = mainidarray.find((file) => file.fileId === postId);
+  // const { postId } = await params;
+  // const data = await fetchFileIds();
+  // const mainidarray = data.fileData;
+  // const foundFileDetail = mainidarray.find((file) => file.fileId === postId);
 
   return (
     <div className="">
@@ -34,7 +34,7 @@ const StatusPage = async ({ params }: Params) => {
         </Link>
         <h1 className="font-bold text-lg">Post</h1>
       </div>
-      <SinglePost id={postId} desc={foundFileDetail?.description || ""} type="status" />
+      {/* <SinglePost id={postId} desc={foundFileDetail?.description || ""} type="status" /> */}
       <Comments />
     </div>
   );
