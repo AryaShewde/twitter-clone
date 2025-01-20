@@ -29,12 +29,12 @@ interface ImageKitFile {
 export async function GET() {
   try {
     // Fetch files from ImageKit
-    const response = await imagekit.listFiles({
+    const files = await imagekit.listFiles({
       path: "posts"
-    });
+    }) as Array<{ fileId: string; customMetadata?: { description?: string } }>;
 
     // Filter out any non-file objects (e.g., folders) and ensure the result matches ImageKitFile
-    const files: ImageKitFile[] = response.items.filter((item): item is ImageKitFile => {
+    const filteredFiles: ImageKitFile[] = files.filter((item): item is ImageKitFile => {
       return (item as ImageKitFile).fileId !== undefined;
     });
 
