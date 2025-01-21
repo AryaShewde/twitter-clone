@@ -20,6 +20,7 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
 //   }
 // }
 
+// const StatusPage = async ({ params }: Params) => {
 const StatusPage = async () => {
   // const { postId } = await params;
   // const data = await fetchFileIds();
