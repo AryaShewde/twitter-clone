@@ -16,8 +16,11 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
   }
 };
 
+interface StatusPageProps {
+  params: { postId: string };
+}
 
-const StatusPage = async ({ params }: { params: { postId: string } }) => {
+const StatusPage = async ({ params }: StatusPageProps) => {
   const { postId } = params;
   const data = await fetchFileIds();
   const mainidarray = data.fileData;
