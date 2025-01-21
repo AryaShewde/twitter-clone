@@ -15,8 +15,11 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
 };
 
 interface PageProps {
-  params: { postId: string };
+  params: {
+    postId: string;
+  };
 }
+
 
 const StatusPage = async ({ params }: PageProps) => {
   const { postId } = params;
