@@ -17,12 +17,9 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
 interface Params {
   postId: string;
 }
-type StatusPageProps = {
-  params: Params;
-};
 
-const StatusPage = async ({ params }: StatusPageProps) => {
-  const { postId } = params
+const StatusPage = async ({ params }: { params: Params }) => {
+  const { postId } = params;
   const data = await fetchFileIds();
   const mainidarray = data.fileData;
   const foundFileDetail = mainidarray.find((file) => file.fileId === postId);
