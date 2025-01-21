@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import Comments from "@/components/Comments";
 import Image from "@/components/Image";
 import SinglePost from "@/components/SinglePost";
@@ -18,11 +19,20 @@ interface Params {
   postId: string;
 }
 
-const StatusPage = async ({ params }: { params: Params }) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { params } = context;
+  if (!params || typeof params.postId !== 'string') {
+    return { notFound: true };
+  }
   const { postId } = params;
   const data = await fetchFileIds();
-  const mainidarray = data.fileData;
-  const foundFileDetail = mainidarray.find((file) => file.fileId === postId);
+  return {
+    props: { postId, fileData: data.fileData },
+  };
+};
+
+const StatusPage = ({ postId, fileData }: { postId: string; fileData: { fileId: string; description: string }[] }) => {
+  const foundFileDetail = fileData.find((file) => file.fileId === postId);
 
   return (
     <div className="">
@@ -39,3 +49,4 @@ const StatusPage = async ({ params }: { params: Params }) => {
 };
 
 export default StatusPage;
+
