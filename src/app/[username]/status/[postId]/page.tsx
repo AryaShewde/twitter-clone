@@ -18,7 +18,11 @@ interface Params {
   postId: string;
 }
 
-const StatusPage = async ({ params }: { params: Params }) => {
+const StatusPage = async ({
+  params,
+}: {
+  params: { postId: string };
+}) => {
   const { postId } = params;
   const data = await fetchFileIds();
   const mainidarray = data.fileData;
