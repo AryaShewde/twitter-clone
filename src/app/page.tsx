@@ -1,4 +1,4 @@
-// import Feed from "@/components/Feed";
+import Feed from "@/components/Feed";
 // import Share from "@/components/Share";
 import Link from "next/link";
 
@@ -8,8 +8,8 @@ const Homepage = () => {
       <Link className="pb-3 flex items-center text-white border-b-4 border-iconBlue" href="/">For you</Link>
       <Link className="pb-3 flex items-center" href="/following">Following</Link>
     </div>
-    {/* <Share />
-    <Feed /> */}
+    {/* <Share /> */}
+    <Feed />
   </div>;
 };
 
