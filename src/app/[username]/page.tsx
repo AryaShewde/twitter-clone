@@ -69,7 +69,7 @@ const UserPage = () => {
           </div>
         </div>
       </div>
-      <Feed fileData={[]} />
+      <Feed />
     </div>
   );
 };

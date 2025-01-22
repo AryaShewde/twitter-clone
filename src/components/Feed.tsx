@@ -1,3 +1,4 @@
+import React from 'react';
 import { GetServerSideProps } from 'next';
 import Post from './Post';
 
@@ -13,20 +14,20 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
   }
 };
 
-// Fetch data server-side before the page is rendered
-export const getServerSideProps: GetServerSideProps = async () => {
-  const data = await fetchFileIds();
+// The Feed component
+const Feed = () => {
+  // This component does not receive props, and fetches data on each request
+  const [fileData, setFileData] = React.useState<{ fileId: string; description: string }[]>([]);
 
-  // Return the fetched data as props
-  return {
-    props: {
-      fileData: data.fileData,
-    },
-  };
-};
+  // Fetch data when the component mounts (client-side)
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchFileIds();
+      setFileData(data.fileData);
+    };
+    fetchData();
+  }, []); // Empty dependency array means it only runs once after mount
 
-// The Feed component which receives the data from server-side props
-const Feed = ({ fileData }: { fileData: { fileId: string; description: string }[] }) => {
   if (!fileData || fileData.length === 0) {
     return <div className="text-center p-4">Data not found</div>;
   }
@@ -38,6 +39,13 @@ const Feed = ({ fileData }: { fileData: { fileId: string; description: string }[
       ))}
     </div>
   );
+};
+
+// Here, we can use `getServerSideProps` for initial data fetching, but we won't pass it as props
+export const getServerSideProps: GetServerSideProps = async () => {
+  // Fetch the initial data on the server side for the first request
+  await fetchFileIds(); // You can also handle this fetch on the server side as needed
+  return { props: {} }; // No need to pass any props here, but ensure the page can render
 };
 
 export default Feed;
