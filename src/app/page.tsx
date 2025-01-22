@@ -9,7 +9,7 @@ const Homepage = () => {
       <Link className="pb-3 flex items-center" href="/following">Following</Link>
     </div>
     <Share />
-    <Feed />
+    <Feed fileData={[]} />
   </div>;
 };
 
