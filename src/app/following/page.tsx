@@ -10,7 +10,7 @@ const PopularTags = () => {
                 <Link className="pb-3 flex items-center text-white border-b-4 border-iconBlue" href="/following">Following</Link>
             </div>
             <Share />
-            <Feed fileData={[]} />
+            <Feed />
         </div>
     )
 }
