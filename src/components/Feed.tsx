@@ -1,6 +1,6 @@
-import React from 'react';
-import { GetServerSideProps } from 'next';
-import Post from './Post';
+"use client"
+import { useState, useEffect } from "react";
+import Post from "./Post";
 
 // Function to fetch file IDs from your API
 const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string }[] }> => {
@@ -9,43 +9,56 @@ const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error fetching file IDs:', error);
+    console.error("Error fetching file IDs:", error);
     return { fileData: [] };
   }
 };
 
-// The Feed component
+// Feed component (client-side only, no props used)
 const Feed = () => {
-  // This component does not receive props, and fetches data on each request
-  const [fileData, setFileData] = React.useState<{ fileId: string; description: string }[]>([]);
+  const [fileData, setFileData] = useState<{ fileId: string; description: string }[]>([]); // State to store file data
+  const [loading, setLoading] = useState<boolean>(true); // State to track loading status
+  const [error, setError] = useState<string | null>(null); // State to handle errors
 
   // Fetch data when the component mounts (client-side)
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchFileIds();
-      setFileData(data.fileData);
+      try {
+        const data = await fetchFileIds();
+        setFileData(data.fileData); // Update the state with fetched data
+      } catch (error) {
+        setError("Failed to load data.");
+      } finally {
+        setLoading(false); // Set loading to false once data is fetched
+      }
     };
-    fetchData();
-  }, []); // Empty dependency array means it only runs once after mount
 
+    fetchData(); // Trigger data fetching
+  }, []); // Empty dependency array ensures this runs only once after the component mounts
+
+  // If loading, display a loading message
+  if (loading) {
+    return <div className="text-center p-4">Loading...</div>;
+  }
+
+  // If there's an error, display an error message
+  if (error) {
+    return <div className="text-center p-4">{error}</div>;
+  }
+
+  // If no data is found, display a "not found" message
   if (!fileData || fileData.length === 0) {
     return <div className="text-center p-4">Data not found</div>;
   }
 
+  // Render the posts if data is available
   return (
-    <div className="">
+    <div>
       {fileData.slice().reverse().map((filesubdata) => (
         <Post key={filesubdata.fileId} id={filesubdata.fileId} desc={filesubdata.description} />
       ))}
     </div>
   );
-};
-
-// Here, we can use `getServerSideProps` for initial data fetching, but we won't pass it as props
-export const getServerSideProps: GetServerSideProps = async () => {
-  // Fetch the initial data on the server side for the first request
-  await fetchFileIds(); // You can also handle this fetch on the server side as needed
-  return { props: {} }; // No need to pass any props here, but ensure the page can render
 };
 
 export default Feed;
