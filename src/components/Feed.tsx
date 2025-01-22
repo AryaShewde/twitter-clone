@@ -2,7 +2,7 @@ import Post from "./Post"
 
 const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string }[] }> => {
   try {
-    const response = await fetch(`${process.env.FETCH_URL}/api/getImageFileIds`);
+    const response = await fetch(`https://twitter-clone-azure-eta.vercel.app/api/getImageFileIds`);
     const data = await response.json();
     return data;
   } catch (error) {

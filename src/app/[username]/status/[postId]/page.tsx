@@ -20,7 +20,6 @@ type Params = Promise<{ postId: string }>
 
 
 const Page = async ({ params }: { params: Params }) => {
-  // const Page = () => {
   const { postId } = await params;
   const data = await fetchFileIds();
   const mainidarray = data.fileData;
