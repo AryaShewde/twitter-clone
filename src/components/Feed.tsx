@@ -12,7 +12,7 @@ const Feed = () => {
     const fetchFileIds = async () => {
       try {
         const response = await fetch(`${process.env.FETCH_URL}/api/getImageFileIds`);
-        if (!response.ok) throw new Error('Failed to fetch data');
+        // if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setFileData(data.fileData || []);
       } catch (err) {
