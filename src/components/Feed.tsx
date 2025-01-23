@@ -15,8 +15,12 @@ const Feed = () => {
         if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setFileData(data.fileData || []);
-      } catch (err: any) {
-        setError(err.message || 'Something went wrong');
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message || 'Something went wrong');
+        } else {
+          setError('Something went wrong');
+        }
       } finally {
         setIsLoading(false);
       }
