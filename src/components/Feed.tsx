@@ -31,7 +31,7 @@ const Feed = () => {
         .reverse()
         .map((filesubdata) => (
           // <Post key={filesubdata.fileId} id={filesubdata.fileId} desc={filesubdata.description} />
-          <div>
+          <div key={filesubdata.fileId}>
             <h1>{filesubdata.fileId}</h1>
             <h1>{filesubdata.description}</h1>
           </div>
