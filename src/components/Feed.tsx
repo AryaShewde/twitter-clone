@@ -11,7 +11,7 @@ const Feed = () => {
   useEffect(() => {
     const fetchFileIds = async () => {
       try {
-        const response = await fetch('https://twitter-clone-g9jozuqn1-arya-shewdes-projects.vercel.app//api/getImageFileIds');
+        const response = await fetch(`${process.env.FETCH_URL}/api/getImageFileIds`);
         if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setFileData(data.fileData || []);
