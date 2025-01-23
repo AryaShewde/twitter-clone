@@ -4,7 +4,9 @@ import Link from "next/link";
 
 const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string }[] }> => {
     try {
-        const response = await fetch(`${process.env.FETCH_URL}/api/getImageFileIds`);
+        const response = await fetch(`${process.env.FETCH_URL}/api/getImageFileIds`, {
+            cache: "no-store",
+          });
         const data = await response.json();
         return data;
     } catch (error) {
