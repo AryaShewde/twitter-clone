@@ -1,5 +1,6 @@
 import Link from "next/link";
 import NextImage from "next/image";
+import FollowButton from "./FollowButton";
 
 const Recommendations = () => {
   return (
@@ -14,7 +15,7 @@ const Recommendations = () => {
             <span className="text-textGray text-sm">@JeffBezos</span>
           </div>
         </div>
-        <button className="py-1 px-4 font-semibold bg-white text-black rounded-full">Follow</button>
+        <FollowButton/>
       </div>
       <div className='flex items-center justify-between'>
         <div className='flex items-center gap-2'>
@@ -26,7 +27,7 @@ const Recommendations = () => {
             <span className="text-textGray text-sm">@SpaceX</span>
           </div>
         </div>
-        <button className="py-1 px-4 font-semibold bg-white text-black rounded-full">Follow</button>
+        <FollowButton/>
       </div>
       <div className='flex items-center justify-between'>
         <div className='flex items-center gap-2'>
@@ -38,7 +39,7 @@ const Recommendations = () => {
             <span className="text-textGray text-sm">@Tesla</span>
           </div>
         </div>
-        <button className="py-1 px-4 font-semibold bg-white text-black rounded-full">Follow</button>
+        <FollowButton/>
       </div>
       <Link href="/" className="text-iconBlue">
         Show More

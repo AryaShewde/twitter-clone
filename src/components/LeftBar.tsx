@@ -76,7 +76,7 @@ const LeftBar = () => {
           {menuList.map((item) => (
             <div key={item.id}>
               {item.name == "Premium" ?
-                <a
+                <Link
                   href={item.link}
                   className="p-2 rounded-full hover:bg-[#181818] flex items-center gap-4"
                 >
@@ -87,7 +87,7 @@ const LeftBar = () => {
                     h={24}
                   />
                   <span className="hidden xxl:inline">{item.name}</span>
-                </a>
+                </Link>
                 :
                 <Link
                   href={item.link}

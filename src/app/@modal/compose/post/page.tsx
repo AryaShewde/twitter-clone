@@ -12,7 +12,7 @@ const PostModal = () => {
   };
 
   return (
-    <div className="fixed w-full h-screen top-0 left-0 z-20 bg-[#293139a6] flex justify-center">
+    <div className="fixed w-full h-screen top-0 left-0 z-40 bg-[#293139a6] flex justify-center">
       <div className="py-4 px-8 rounded-xl bg-black w-[600px] h-max mt-12">
         <div className="flex items-center justify-between">
           <div className="cursor-pointer" onClick={closeModal}>
