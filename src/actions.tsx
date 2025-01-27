@@ -31,6 +31,7 @@ export const shareAction = async (
       }),
       customMetadata: {
         sensitive: settings.sensitive,
+        type: settings.type,
         description: desc || "",
       },
     },

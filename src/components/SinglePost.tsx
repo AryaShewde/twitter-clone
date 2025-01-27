@@ -14,7 +14,7 @@ interface FileDetailsResponse {
   filePath: string;
   url: string;
   fileType: string;
-  customMetadata?: { sensitive: boolean };
+  customMetadata?: { sensitive: boolean, type: string };
 }
 interface PostProps {
   id: string;
@@ -57,7 +57,7 @@ const SinglePost = async ({ type, id, desc }: PostProps) => {
         <div
           className={`${
             type === "status" && "hidden"
-          } relative w-10 h-10 rounded-full overflow-hidden`}
+          } relative md:w-10 w-7 md:h-10 h-7 rounded-full overflow-hidden`}
         >
           <NextImage src="/general/avatar.png" alt="profile pic" width={100} height={100} />
         </div>
@@ -99,8 +99,16 @@ const SinglePost = async ({ type, id, desc }: PostProps) => {
             <Image
               path={fileDetails.filePath}
               alt=""
-              w={fileDetails.width}
-              h={fileDetails.height}
+              w={fileDetails.customMetadata?.type === 'wide' 
+                ? fileDetails.width 
+                : fileDetails.customMetadata?.type === 'square' 
+                ? fileDetails.width 
+                : fileDetails.width}
+              h={fileDetails.customMetadata?.type === 'wide' 
+                ? (fileDetails.width * 9) / 16 
+                : fileDetails.customMetadata?.type === 'square' 
+                ? fileDetails.width 
+                : fileDetails.height}
               className={fileDetails.customMetadata?.sensitive ? "blur-lg  rounded-2xl" : "rounded-2xl"}
             />
           ) : (

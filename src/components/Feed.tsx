@@ -1,6 +1,6 @@
 import Post from "./Post"
 
-const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string }[] }> => {
+const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string; }[] }> => {
   try {
     const response = await fetch(`${process.env.FETCH_URL}/api/getImageFileIds`, {
       cache: "no-store",

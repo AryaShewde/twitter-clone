@@ -13,7 +13,7 @@ interface FileDetailsResponse {
   filePath: string;
   url: string;
   fileType: string;
-  customMetadata?: { sensitive: boolean };
+  customMetadata?: { sensitive: boolean, type: string };
 }
 interface PostProps {
   id: string;
@@ -52,10 +52,10 @@ const Post = async ({ type, id, desc }: PostProps) => {
         </svg>
         <span>Username reposted</span>
       </div>
-      <div className={`flex gap-4 ${type === "status" && "flex-col"}`}>
+      <div className={`flex md:gap-4 gap-2 ${type === "status" && "flex-col"}`}>
         <div
           className={`${type === "status" && "hidden"
-            } relative w-10 h-10 rounded-full overflow-hidden`}
+            } relative md:w-10 w-7 md:h-10 h-7 rounded-full overflow-hidden`}
         >
           <NextImage src="/general/avatar.png" alt="profile pic" width={100} height={100} />
         </div>
@@ -64,7 +64,7 @@ const Post = async ({ type, id, desc }: PostProps) => {
             <Link href={`/username`} className="flex gap-4">
               <div
                 className={`${type !== "status" && "hidden"
-                  } relative w-10 h-10 rounded-full overflow-hidden`}
+                  } relative w-1 h-10 rounded-full overflow-hidden`}
               >
                 <NextImage src="/general/avatar.png" alt="profile pic" width={100} height={100} />
               </div>
@@ -96,8 +96,17 @@ const Post = async ({ type, id, desc }: PostProps) => {
               <Image
                 path={fileDetails.filePath}
                 alt=""
-                w={fileDetails.width}
-                h={fileDetails.height}
+                // w={fileDetails.width}
+                w={fileDetails.customMetadata?.type === 'wide' 
+                  ? fileDetails.width 
+                  : fileDetails.customMetadata?.type === 'square' 
+                  ? fileDetails.width 
+                  : fileDetails.width}
+                h={fileDetails.customMetadata?.type === 'wide' 
+                  ? (fileDetails.width * 9) / 16 
+                  : fileDetails.customMetadata?.type === 'square' 
+                  ? fileDetails.width 
+                  : fileDetails.height}
                 className={fileDetails.customMetadata?.sensitive ? "blur-lg  rounded-2xl" : " rounded-2xl"}
               />
             ) : (
