@@ -6,6 +6,33 @@ import NextImage from "next/image";
 import { shareAction } from "@/actions";
 import ImageEditor from "./ImageEditor";
 
+const waitForPostInFeed = async (fileId: string) => {
+  while (true) {
+    try {
+      const response = await fetch("/api/getImageFileIds", {
+        cache: "no-store",
+      });
+
+      if (response.ok) {
+        const data: { fileData?: { fileId: string }[] } =
+          await response.json();
+
+        const postExists = data.fileData?.some(
+          (file) => file.fileId === fileId
+        );
+
+        if (postExists) {
+          return;
+        }
+      }
+    } catch {
+      // Keep waiting. The post may still be propagating.
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+};
+
 const Share = () => {
   const [media, setMedia] = useState<File | null>(null);
   const [description, setDescription] = useState<string>("");
@@ -48,7 +75,9 @@ const Share = () => {
     try {
       setIsLoading(true);
 
-      await shareAction(formData, settings);
+      const fileId = await shareAction(formData, settings);
+
+      await waitForPostInFeed(fileId);
 
       setMedia(null);
       setDescription("");

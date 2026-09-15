@@ -23,7 +23,7 @@ export const shareAction = async (
         : ""
     }`;
 
-  return new Promise<void>((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
     imagekit.upload(
       {
         file: buffer,
@@ -44,9 +44,11 @@ export const shareAction = async (
         if (error) {
           console.error("ImageKit upload failed:", error);
           reject(error);
+        } else if (!result) {
+          reject(new Error("ImageKit upload returned no result"));
         } else {
           console.log("ImageKit upload successful:", result);
-          resolve();
+          resolve(result.fileId);
         }
       }
     );
