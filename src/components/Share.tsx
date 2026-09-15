@@ -47,18 +47,21 @@ const Share = () => {
 
     try {
       setIsLoading(true);
+
       await shareAction(formData, settings);
+
       setMedia(null);
       setDescription("");
-      await new Promise(() => setTimeout(() => {
-        alert("Post shared successfully!");
-        window.location.reload();
-      }, 5000));
-      setIsLoading(false);
+
+      alert("Post shared successfully!");
+
+      window.location.reload();
     } catch (error) {
       console.error("Failed to share post:", error);
-      setIsLoading(false);
+
       alert("Failed to share post.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -185,7 +188,7 @@ const Share = () => {
             />
           </div>
           <button type="submit" className="bg-white text-black font-bold rounded-full py-0 md:py-2 px-4" disabled={isLoading}>
-            {isLoading? <NextImage src={"/svg/loading.gif"} alt="..." width={30} height={30} /> : "Post"}
+            {isLoading ? <NextImage src={"/svg/loading.gif"} alt="..." width={30} height={30} /> : "Post"}
           </button>
         </div>
       </div>
