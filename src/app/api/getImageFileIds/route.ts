@@ -38,7 +38,7 @@ export async function GET() {
       return (item as ImageKitFile).fileId !== undefined;
     });
 
-    const fileData = files.map((file) => ({
+    const fileData = filteredFiles.map((file) => ({
       fileId: file.fileId,
       description: file.customMetadata?.description || "No description",
     }));
