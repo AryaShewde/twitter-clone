@@ -2,6 +2,8 @@ import Image from "@/components/Image";
 import Post from "@/components/Post";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 const fetchFileIds = async (): Promise<{ fileData: { fileId: string; description: string }[] }> => {
     try {
         const response = await fetch(`${process.env.FETCH_URL}/api/getImageFileIds`, {
