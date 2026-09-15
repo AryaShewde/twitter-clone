@@ -4,7 +4,7 @@ import { imagekit } from '@/utils';
 interface ImageKitFile {
   fileId: string;
   customMetadata?: {
-    description?: string; 
+    description?: string;
   };
 }
 
@@ -44,9 +44,9 @@ export async function GET() {
     }));
 
     return NextResponse.json({ fileData });
-  } catch (error: unknown) {
+  } catch {
     return NextResponse.json(
-      { error: 'Failed to fetch files' },
+      { error: "Failed to fetch files" },
       { status: 500 }
     );
   }
