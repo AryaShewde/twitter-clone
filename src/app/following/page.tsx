@@ -2,6 +2,8 @@ import Feed from '@/components/Feed'
 import Share from '@/components/Share'
 import Link from 'next/link'
 
+export const dynamic = "force-dynamic";
+
 const PopularTags = () => {
     return (
         <div className="">
